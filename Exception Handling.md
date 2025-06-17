@@ -17,14 +17,16 @@ An **exception** is an **unexpected event** that occurs during program execution
 ---
 
 ## Exception Types :
-### 1. Checked Exception: 
+
+### 1. Checked Exception:
+
 These are exceptions that are checked at compile-time. They must be either caught or declared in the method signature using the `throws` keyword. Examples include `IOException`, `SQLException`, ClassNOt FoundException, etc.
 
-### 2. Unchecked Exception: 
+### 2. Unchecked Exception:
+
 These are exceptions that are not checked at compile-time. They are subclasses of `RuntimeException` and do not need to be declared or caught. Examples include `ArithmaticException`, `NullPointerException`, `NumberFormat Exception`, `ArrayIndexOutOfBoundsException`, etc.
 
 ---
-
 
 🧩 Example:
 
@@ -223,6 +225,9 @@ This is a feature introduced in Java 7 that
 
 allows automatic resource management. It ensures that resources like files or database connections are closed automatically when they are no longer needed, even if an exception occurs.
 
+
+
+
 ---
 
 ## 📌 Summary Table
@@ -236,6 +241,75 @@ allows automatic resource management. It ensures that resources like files or da
 | `throws`  | Declares an exception that a method can throw |
 
 ---
+
+## Example 1:
+
+```java
+package Exception_Handling;
+
+import java.util.Scanner;
+
+
+public class Test {
+
+
+    public static void main(String[] args) {
+
+
+        try {
+
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter a divident (non-negative): ");
+            int divident = sc.nextInt();
+
+            System.out.print("Enter a diviser: ");
+            int diviser = sc.nextInt();
+
+
+            int result  = divident / diviser;
+            sc.close();
+            System.out.println("Result: " + result);
+
+        } catch (ArithmeticException e) {
+            System.out.println("Can't devide by Zero");
+        }
+
+    }
+
+
+
+}
+
+
+```
+
+## Example 2 :
+
+Multiple exception
+
+```java
+
+package Exception_Handling;
+
+
+
+public class Test {
+
+
+    public static void main(String[] args) {
+
+        int arr[] = new int[5];
+        try {
+            arr[60] = 60/0;
+        } catch (ArithmeticException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+
+}
+```
 
 ## 💻 Practice Task for You
 

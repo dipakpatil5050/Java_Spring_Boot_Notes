@@ -187,6 +187,10 @@ public class LoginSystem {
 }
 ```
 
+## Exception Chart
+![image](https://github.com/user-attachments/assets/3c96a854-6dca-4c96-b9ae-a39d7426daf9)
+
+
 ---
 
 ## 📌 Summary Table

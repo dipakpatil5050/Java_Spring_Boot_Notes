@@ -1,9 +1,5 @@
 # Java_Spring_Boot_Notes
 
-
-
-
-
 ---
 
 ## ✅ What is Exception Handling?
@@ -17,6 +13,18 @@
 ## ⚠️ What is an Exception?
 
 An **exception** is an **unexpected event** that occurs during program execution and disrupts the normal flow.
+
+---
+
+## Exception Types :
+### 1. Checked Exception: 
+These are exceptions that are checked at compile-time. They must be either caught or declared in the method signature using the `throws` keyword. Examples include `IOException`, `SQLException`, ClassNOt FoundException, etc.
+
+### 2. Unchecked Exception: 
+These are exceptions that are not checked at compile-time. They are subclasses of `RuntimeException` and do not need to be declared or caught. Examples include `ArithmaticException`, `NullPointerException`, `NumberFormat Exception`, `ArrayIndexOutOfBoundsException`, etc.
+
+---
+
 
 🧩 Example:
 
@@ -73,8 +81,8 @@ public class TryCatchExample {
 
 ## 🔁 Try-Catch-Finally Block
 
-* `finally` block **always runs** whether exception is thrown or not.
-* Used to **close resources** (files, DB connection, etc.)
+- `finally` block **always runs** whether exception is thrown or not.
+- Used to **close resources** (files, DB connection, etc.)
 
 ```java
 try {
@@ -187,6 +195,34 @@ public class LoginSystem {
 }
 ```
 
+### Important keywords in Exception Handling:
+
+### 1. try:
+
+This block contains code that might throw an exception. If an exception occurs, the control is transferred to the catch block.
+
+### 2. catch:
+
+This block is used to handle exceptions that occur in the try block.
+
+### 3. finally:
+
+This block is optional and is always executed after the try-catch blocks, regardless of whether an exception was thrown or caught. It is typically used for cleanup operations, such as closing resources.
+
+### 4. throw:
+
+This keyword is used to explicitly throw an exception.
+
+### 5. throws:
+
+This keyword is used in method signatures to declare that a method can throw a specific exception. It allows the caller of the method to handle the exception.
+
+### 6. try-with-resources:
+
+This is a feature introduced in Java 7 that
+
+allows automatic resource management. It ensures that resources like files or database connections are closed automatically when they are no longer needed, even if an exception occurs.
+
 ---
 
 ## 📌 Summary Table
@@ -205,9 +241,10 @@ public class LoginSystem {
 
 1. Write a program to handle:
 
-   * Divide by zero
-   * NullPointerException
-   * FileNotFoundException using `throws`
+   - Divide by zero
+   - NullPointerException
+   - FileNotFoundException using `throws`
+
 2. Create a custom exception class for “Invalid Age”
 
 ---

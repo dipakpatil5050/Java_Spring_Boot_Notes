@@ -198,8 +198,8 @@ public class LoginSystem {
 ```
 
 ## Exception Chart
-![image](https://github.com/user-attachments/assets/3c96a854-6dca-4c96-b9ae-a39d7426daf9)
 
+![image](https://github.com/user-attachments/assets/3c96a854-6dca-4c96-b9ae-a39d7426daf9)
 
 ### Important keywords in Exception Handling:
 
@@ -228,9 +228,6 @@ This keyword is used in method signatures to declare that a method can throw a s
 This is a feature introduced in Java 7 that
 
 allows automatic resource management. It ensures that resources like files or database connections are closed automatically when they are no longer needed, even if an exception occurs.
-
-
-
 
 ---
 
@@ -313,6 +310,64 @@ public class Test {
 
 
 }
+```
+
+## Example 3 : Throw
+
+```java
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+
+
+
+
+        Scanner sc =new Scanner(System.in);
+        System.out.println("Enter a Age: ");
+        int age = sc.nextInt();
+        sc.close();
+
+
+        if (age < 18) {
+
+            throw new RuntimeException("Sorry you can't Vote");
+        }
+        else{
+            System.out.println("Age is greater than 18 so you can Vote");
+        }
+
+
+
+    }
+}
+
+
+
+
+```
+
+## Example 4 : Throws
+
+```java
+
+
+import java.util.Scanner;
+
+public class Main {
+
+
+
+    public static void DivisionDemo(int dividend, int divisor) throws ArithmeticException{
+        System.out.println("The result is : "+ dividend / divisor );
+    }
+
+    public static void main(String[] args) {
+        DivisionDemo(10,0);
+    }
+}
+
 ```
 
 ## 💻 Practice Task for You

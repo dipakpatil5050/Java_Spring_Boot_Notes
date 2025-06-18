@@ -20,7 +20,7 @@ An **exception** is an **unexpected event** that occurs during program execution
 
 ### 1. Checked Exception:
 
-These are exceptions that are checked at compile-time. They must be either caught or declared in the method signature using the `throws` keyword. Examples include `IOException`, `SQLException`, ClassNOt FoundException, etc.
+These are exceptions that are checked at compile-time. They must be either caught or declared in the method signature using the `throws` keyword. Examples include `IOException`, `SQLException`, `ClassNOt FoundException`, etc.
 
 ### 2. Unchecked Exception:
 

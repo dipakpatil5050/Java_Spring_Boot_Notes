@@ -184,6 +184,11 @@ List<String> list = new ArrayList<>();
 Map<String, Integer> map = new HashMap<>();
 ```
 
+## ✅ With or Wothout Generics
+
+![image](https://github.com/user-attachments/assets/ca18f432-b134-4369-93db-5ef67e041a43)
+
+
 ---
 
 ## 📌 Summary Table

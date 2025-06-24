@@ -216,4 +216,46 @@ class Rectangle implements Drawable {
 3. Create an interface `Animal` with method `sound()` and implement it in `Dog`, `Cat`.
 4. Demonstrate encapsulation by creating a class `BankAccount` with private balance.
 
+
+
+---
+
+   # 4 Pillar of OOPS Short notes
+
+   ## Abstraction:
+
+   - Hide internal details only shows essential data,
+   - Simple interface to user without asking for complex details to perform an action
+     eg: Drive the car without requiring to understand tiny details of "how does the engine work"
+     Advantages: it helps to reduce the operational complexity at the end user.
+
+   ## Inheritance:
+
+   - inherit data from parent class to child class
+   - technique of taking properties from another class having features in common.
+   - Parent -> Child -> is-a Relationship => child is a type of parent
+     eg: Vehicle -> Car
+
+   Advantages:
+
+   - reusability and reduce duplication of code
+
+   ## Encapsulation:
+
+   - use for Security and restriction to user from directly modify the data member or variables of class to maintain the integrity of the data.
+   - Restrict the access
+     eg: integrity data in is not compromised
+
+   ## Polymorphism:
+
+   - poly -> multiple, Morphy -> Form
+   - perform action in multiple or different ways
+   - one Entity with many forms
+   - can reuse the code via Polymorphism
+
+   eg:
+
+   1. Lord Vishnu -> has many -> avatar
+   2. women -> can be => mother -> sister -> Wife -> grandmother
+
 ---

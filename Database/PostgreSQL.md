@@ -216,3 +216,187 @@ CREATE TABLE employees (
 | Constraints  | `PRIMARY KEY`, `UNIQUE`, `CHECK`, `DEFAULT` |
 
 ---
+
+---
+
+# 📘 **Day 2: JOINs, Aggregate Functions & Subqueries in PostgreSQL**
+
+---
+
+## 🎯 **Goal**:
+
+* Understand how to link tables with JOINs
+* Use aggregate functions to summarize data
+* Use subqueries to write complex conditions
+
+---
+
+## 🔧 Prerequisite Tables
+
+We'll use these sample tables today:
+
+```sql
+-- Table 1: departments
+CREATE TABLE departments (
+    dept_id SERIAL PRIMARY KEY,
+    dept_name VARCHAR(50) NOT NULL
+);
+
+-- Table 2: employees (already created yesterday, adding FK now)
+ALTER TABLE employees ADD COLUMN dept_id INT;
+ALTER TABLE employees ADD CONSTRAINT fk_dept FOREIGN KEY (dept_id) REFERENCES departments(dept_id);
+```
+
+### ✅ Sample Data
+
+```sql
+-- Insert into departments
+INSERT INTO departments (dept_name) VALUES 
+('Engineering'), 
+('Sales'), 
+('HR'), 
+('Marketing'), 
+('Finance');
+
+-- Update employees to assign dept_id
+UPDATE employees SET dept_id = 1 WHERE dept = 'Engineering';
+UPDATE employees SET dept_id = 2 WHERE dept = 'Sales';
+UPDATE employees SET dept_id = 3 WHERE dept = 'HR';
+UPDATE employees SET dept_id = 4 WHERE dept = 'Marketing';
+UPDATE employees SET dept_id = 5 WHERE dept = 'Finance';
+```
+
+---
+
+## ✅ Section 1: JOINS
+
+### 🔸 `INNER JOIN`: Match records in both tables
+
+```sql
+SELECT e.emp_id, e.fname, d.dept_name
+FROM employees e
+INNER JOIN departments d ON e.dept_id = d.dept_id;
+```
+
+### 🔸 `LEFT JOIN`: Get all employees, even if no matching department
+
+```sql
+SELECT e.emp_id, e.fname, d.dept_name
+FROM employees e
+LEFT JOIN departments d ON e.dept_id = d.dept_id;
+```
+
+### 🔸 `RIGHT JOIN`: Get all departments, even if no employees
+
+```sql
+SELECT e.fname, d.dept_name
+FROM employees e
+RIGHT JOIN departments d ON e.dept_id = d.dept_id;
+```
+
+### 🔸 `FULL JOIN`: Everything from both sides
+
+```sql
+SELECT e.fname, d.dept_name
+FROM employees e
+FULL JOIN departments d ON e.dept_id = d.dept_id;
+```
+
+---
+
+## ✅ Section 2: Aggregate Functions
+
+### 🔸 COUNT, SUM, AVG, MAX, MIN
+
+```sql
+-- Count total employees
+SELECT COUNT(*) FROM employees;
+
+-- Average salary
+SELECT AVG(salary) FROM employees;
+
+-- Maximum salary in Engineering
+SELECT MAX(salary) FROM employees WHERE dept = 'Engineering';
+
+-- Salary stats per department
+SELECT dept, COUNT(*) AS emp_count, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY dept;
+```
+
+---
+
+## ✅ Section 3: GROUP BY & HAVING
+
+### 🔸 Group + Filter aggregate results
+
+```sql
+-- Total salary per department
+SELECT dept, SUM(salary) AS total_salary
+FROM employees
+GROUP BY dept;
+
+-- Only departments where total salary > 100000
+SELECT dept, SUM(salary) AS total_salary
+FROM employees
+GROUP BY dept
+HAVING SUM(salary) > 100000;
+```
+
+---
+
+## ✅ Section 4: Subqueries
+
+### 🔸 Subquery in `WHERE` clause
+
+```sql
+-- Employees with salary > average salary
+SELECT * FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+```
+
+### 🔸 Subquery in `FROM` clause (Derived Table)
+
+```sql
+SELECT dept, avg_salary
+FROM (
+  SELECT dept, AVG(salary) AS avg_salary
+  FROM employees
+  GROUP BY dept
+) AS dept_avg
+WHERE avg_salary > 50000;
+```
+
+### 🔸 Subquery in `SELECT` clause
+
+```sql
+SELECT fname, lname,
+  (SELECT dept_name FROM departments d WHERE d.dept_id = e.dept_id) AS department
+FROM employees e;
+```
+
+---
+
+## 🧪 Practice Task for Today
+
+> **Task:** Write and test these queries:
+
+1. Get employee names and their department names (using JOIN)
+2. Find employees who joined in the last 6 months
+3. Find departments with more than 2 employees
+4. Show department-wise max salary
+5. Show employees whose salary is more than the average salary
+6. Show employees who work in a department that has "Sales" in its name (using JOIN + LIKE)
+
+---
+
+## ✅ Day 2 Summary
+
+| Concept    | Key Queries                         |
+| ---------- | ----------------------------------- |
+| JOINs      | `INNER`, `LEFT`, `RIGHT`, `FULL`    |
+| Aggregates | `COUNT`, `SUM`, `AVG`, `MAX`, `MIN` |
+| Grouping   | `GROUP BY`, `HAVING`                |
+| Subqueries | In `SELECT`, `WHERE`, `FROM`        |
+
+---

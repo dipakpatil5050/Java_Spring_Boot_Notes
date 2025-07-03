@@ -400,3 +400,200 @@ FROM employees e;
 | Subqueries | In `SELECT`, `WHERE`, `FROM`        |
 
 ---
+
+
+Great progression, Dipak! Now that you’ve learned views, let's move on to **Stored Procedures** — a powerful feature in SQL, especially useful in enterprise applications and backend systems (like Spring Boot + PostgreSQL apps) for **encapsulating logic in the database itself**.
+
+---
+
+# 📘 **Stored Procedure in PostgreSQL – Complete Guide with StoreDB Example**
+
+---
+
+## 🔍 What is a Stored Procedure?
+
+A **Stored Procedure** is a precompiled set of SQL statements stored in the database. It can:
+
+* Perform logic (INSERT, UPDATE, DELETE, etc.)
+* Accept input/output parameters
+* Be reused across apps
+* Reduce network roundtrips
+* Improve performance for complex operations
+
+> 🔁 Think of it like a **function/method inside the database**.
+
+---
+
+## ✅ Basic Syntax (PostgreSQL)
+
+```sql
+CREATE OR REPLACE PROCEDURE procedure_name(param1 type, param2 type)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- SQL statements go here
+END;
+$$;
+```
+
+To **call** a procedure:
+
+```sql
+CALL procedure_name(arg1, arg2);
+```
+
+---
+
+## 🧾 Example 1: Insert a New Customer (Simple Insert)
+
+```sql
+CREATE OR REPLACE PROCEDURE add_customer(
+  cname VARCHAR,
+  ccity VARCHAR
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  INSERT INTO customers (name, city)
+  VALUES (cname, ccity);
+END;
+$$;
+```
+
+### 🧪 Call it:
+
+```sql
+CALL add_customer('Rohit', 'Ahmedabad');
+```
+
+---
+
+## 🔁 Example 2: Update Customer City (With Logging Logic)
+
+```sql
+CREATE OR REPLACE PROCEDURE update_customer_city(
+  cid INT,
+  new_city VARCHAR
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  UPDATE customers
+  SET city = new_city
+  WHERE customer_id = cid;
+
+  RAISE NOTICE 'Customer city updated successfully!';
+END;
+$$;
+```
+
+### 🧪 Call it:
+
+```sql
+CALL update_customer_city(1, 'Bangalore');
+```
+
+---
+
+## 🔁 Example 3: Increase Salary of Employees in a Department
+
+```sql
+CREATE OR REPLACE PROCEDURE increase_salary_by_dept(
+  deptname VARCHAR,
+  increment DECIMAL
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  UPDATE employees
+  SET salary = salary + increment
+  WHERE dept = deptname;
+
+  RAISE NOTICE 'Salaries updated in department %', deptname;
+END;
+$$;
+```
+
+### 🧪 Call it:
+
+```sql
+CALL increase_salary_by_dept('Sales', 2000);
+```
+
+---
+
+## 💡 Example 4: With Transaction Handling
+
+You can add `BEGIN ... EXCEPTION ... END` blocks inside procedures.
+
+```sql
+CREATE OR REPLACE PROCEDURE safe_order_delete(orderId INT)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  DELETE FROM order_items WHERE order_id = orderId;
+  DELETE FROM orders WHERE order_id = orderId;
+
+  RAISE NOTICE 'Order and its items deleted';
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'Something went wrong';
+END;
+$$;
+```
+
+---
+
+## ✅ Managing Procedures
+
+| Task    | Command                                 |
+| ------- | --------------------------------------- |
+| Create  | `CREATE PROCEDURE`                      |
+| Replace | `CREATE OR REPLACE PROCEDURE`           |
+| Call    | `CALL proc_name(args);`                 |
+| List    | `\df` in `psql`, or query `pg_proc`     |
+| Drop    | `DROP PROCEDURE proc_name(args_types);` |
+
+> ⚠️ You must specify parameter types to drop:
+
+```sql
+DROP PROCEDURE update_customer_city(INT, VARCHAR);
+```
+
+---
+
+## 🚀 Real-World Use Cases (Spring Boot Perspective)
+
+| Use Case                 | Why Use Stored Procedure?                |
+| ------------------------ | ---------------------------------------- |
+| Complex batch updates    | Efficient than multiple API calls        |
+| Custom reporting         | Speed up queries for dashboards          |
+| Auditing, logs, triggers | Embed logic in DB itself                 |
+| Sensitive business logic | Keep critical logic inside DB (security) |
+
+> In Spring Boot, you can call them via:
+
+* JPA `@Procedure`
+* JDBC template
+* Native SQL query
+
+---
+
+## ✅ Summary
+
+| Feature           | Benefit                     |
+| ----------------- | --------------------------- |
+| Precompiled SQL   | Faster execution            |
+| Logic in DB       | Reduces app-side complexity |
+| Can accept args   | Like a function or method   |
+| Secure & reusable | Business rules stay in DB   |
+
+---
+
+## 🧪 Practice Tasks
+
+1. Create a procedure to delete a customer and all their orders
+2. Create a procedure to return total amount of an order
+3. Create a procedure that logs the update of any product price
+4. Create a procedure to insert a new product only if not exists
+
+
